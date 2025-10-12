@@ -12,55 +12,50 @@ El ejercicio se trata de implementar una aplicación _web_ para una trivia de pa
 
 ### Ruta 1: Inicio (o _home_)
 
-En la ruta `/` se debe mostrar la página de inicio. En ésta se debe elegir una país al azar y mostrar su mapa. Debajo de dicho mapa, se deben mostrar cuatro botones, cada uno con una bandera. 
+La página de inicio debe mostrar tres botones para elegir la dificultad con la que se quiere jugar:
 
-Una de esas banderas debe ser la del país elegido. Las otras 3 deben ser banderas de otros 3 países elegidos al azar. En cuál posición está la bandera correcta también debe ser aleatorio. 
+- **Fácil** permite hasta 8 errores antes de perder.
+- **Medio** permite hasta 5 errores antes de perder.
+- **Difícil** permite hasta 3 errores antes de perder.
 
-Debajo de las banderas se debe mostrar el puntaje del usuario, dado por la resta de respuestas correctas menos las respuestas equivocadas. Al presionar uno de los botones con las banderas:
-
-- Se le debe indicar al usuario si contestó bien o mal.
-
-- Se ajusta el puntaje.
-
-- Se activa en el mapa un enlace a la página del país.
-
-- Se muestra un botón debajo de las banderas para refrescar la página con otro desafío.
-
-La lista de todos los códigos de país disponibles se puede acceder haciendo:
+Al presionar cualquiera de esos botones, se asigna un contador con la cantidad de errores permitidos correspondiente, y se redirige al usuario a la página de un país aleatorio. La lista de todos los códigos de país disponibles se puede acceder haciendo:
 
 ```
 GET /api/countries
 200 ["ABW", "AFG", ...]
 ```
 
-Una vez elegido el código (de 3 letras) del país se puede acceder a su información del país con el siguiente _endpoint_:
+### Ruta 2: Página de país
+
+En la ruta `/:cca3` se debe mostrar un título con el nombre del país y su bandera. La información de un país se puede acceder con el siguiente _endpoint_:
 
 ```
 GET /api/countries/URY
 200 {
+  "borders": ["ARG", "BRA"],
   "id": "URY",
   ...
   "flag": {
     "alt": "The flag of Uruguay is ...",
     "svg": "/flags/URY.svg"
-  },
-  "map": {
-    "svg": "/maps/URY.svg"
   }
 }
 ```
 
-Las imágenes se acceden en el mismo servicio que la API, e.g. `/flags/URY.svg`.
+Las imágenes de las banderas se pueden obtener bajo el camino `/flags`, por ejemplo `/flags/URY.svg`.
 
-### Ruta 2: página de un país
+Debajo de la bandera del país se deben mostrar 9 botones con banderas de otros países. Algunos de éstos serán países fronterizos con el país actual. Otros son países elegidos al azar. El usuario debe presionar el botón de un **país fronterizo que no se haya visitado ya**. Sino lo consigue se cuenta como un error. Los países que fronterizos se encuentran en la propiedad `borders` del registro de cada país.
 
-En la ruta `/country/:cca3` se debe mostrar la página del país, con `cca3` refiriendo al identificador de 3 letras del país. La página debe mostrar el nombre común del país como título. Debajo la bandera y el mapa en una misma línea. Más abajo se deben mostrar los siguientes datos del país:
+Debajo de los botones de las banderas, se debe agregar un botón que diga `Ninguno`. Este debe ser presionado por el usuario cuando no se pueda elegir ninguno de los países propuestos.
 
-- Nombres oficiales en inglés y en los idiomas oficiales.
-- Capital.
-- Monedas.
-- Zonas horarias.
+Debajo del botón `Ninguno` se le debe indicar al usuario la cantidad de países visitados, y la cantidad de errores que todavía puede cometer.
 
-Al pie de la página debe haber un enlace para volver a la página de inicio.
+Al presionar uno de los botones con las banderas de los países, además de contabilizar un posible error, se debe redirigir al usuario a la ruta del país elegido. Esto independientemente de que sea una opción correcta o no. Si se presionó el botón de ninguno, se debe redirigir a un país no visitado al azar.
+
+Si al presionar un botón el usuario comete su último error permitido, se debe redirigir a la ruta `/end`.
+
+### Ruta 3: Final
+
+En la ruta `/end` se le muestra al usuario que terminó su viaje. Se indican los países visitados, y se provee de un botón para volver al inicio.
 
 _Fin_
