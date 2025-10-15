@@ -8,7 +8,9 @@ Crear un _fork_ privado de este repositorio. Clonar el _fork_ y ejecutar `npm i`
 
 ## Trivia de países
 
-El ejercicio se trata de implementar una aplicación _web_ para una trivia de países. Se deben tener dos rutas:
+El ejercicio se trata de implementar una aplicación _web_ para una trivia de países. Un croquis de la interfaz de usuario pueden verse en la carpeta `/web/specs/design.svg`.
+
+![Croquis](./web/specs/design.svg)
 
 ### Ruta 1: Inicio (o _home_)
 
