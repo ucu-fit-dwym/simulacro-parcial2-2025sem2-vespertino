@@ -60,4 +60,21 @@ Si al presionar un botón el usuario comete su último error permitido, se debe 
 
 En la ruta `/end` se le muestra al usuario que terminó su viaje. Se indican los países visitados, y se provee de un botón para volver al inicio.
 
+## Herramienta Postman
+
+Para facilitar el testing de la API durante el desarrollo, se incluye una colección de Postman con todos los endpoints disponibles.
+
+### Importar la colección
+
+1. Abrir **Postman** (si no lo tienes instalado, descárgalo desde [postman.com](https://www.postman.com/downloads/))
+2. Hacer click en el botón **"Import"** en la esquina superior izquierda
+3. Seleccionar el archivo `/web/specs/Flag-Trivia-API.postman_collection.json`
+4. La colección "**Flag Trivia API**" aparecerá en tu workspace
+
+### Endpoints disponibles
+
+- `GET /api/countries` - Lista todos los códigos de países
+- `GET /api/countries/:cca3` - Información detallada de un país
+- `GET /flags/:cca3.svg` - Imagen SVG de la bandera del país
+
 _Fin_
